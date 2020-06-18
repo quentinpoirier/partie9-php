@@ -126,26 +126,33 @@ var_dump($myFirstDay);
             <tbody>
                 <tr>
                     <?php
-                    $day = 0;
-                    $caseTotal = $dayInMonth + $myFirstDay - 1;
-                    for ($caseNb = 1; $caseNb <= $caseTotal + 7 - ($caseTotal % 7); $caseNb++) {
-                        if ($caseNb >= $myFirstDay) {
-                            $day++;
+                    if ($dayInMonth) {
+                        $day = 0;
+                        $caseTotal = $dayInMonth + $myFirstDay - 1;
+                        if ($caseTotal % 7 == 0) {
+                            $bonusCase = 0;
+                        } else {
+                            $bonusCase = 7 - ($caseTotal % 7);
+                        }
+                        for ($caseNb = 1; $caseNb <= $caseTotal + $bonusCase; $caseNb++) {
+                            if ($caseNb >= $myFirstDay) {
+                                $day++;
                     ?>
-                            <td class="border border-secondary"><?= $day <= $dayInMonth ? $day : '' ?></td>
+                            <td class="<?= $day <= $dayInMonth ? 'border' : 'border bg-secondary' ?>"><?= $day <= $dayInMonth ? $day : '' ?></td>
                         <?php } else { ?>
-                            <td class="border border-secondary bg-light"></td>
+                            <td class="border border-secondary bg-secondary"></td>
                         <?php }
                         if (($caseNb % 7) == 0) { ?>
                 </tr>
                 <tr>
-            <?php }
+                    <?php 
+                        }
                     }
-            ?>
+                }
+                    ?>
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
-
 </html>
